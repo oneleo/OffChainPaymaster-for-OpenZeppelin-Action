@@ -1,0 +1,28 @@
+{
+  "name": "offchainpaymaster-for-openzeppelin-action-git",
+  "version": "1.0.0",
+  "description": "A project integrating offchain paymasters with OpenZeppelin Defender.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@openzeppelin/defender-sdk-action-client": "^1.15.0",
+    "axios": "^1.7.7",
+    "ethers": "^5.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
