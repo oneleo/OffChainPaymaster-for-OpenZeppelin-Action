@@ -7,6 +7,8 @@ import { utils, BigNumber, BigNumberish } from "ethers";
 
 import axios from "axios";
 
+export const sharedState: Record<string, UserOpProcessedEventParams[]> = {};
+
 // Identifier for UserOperationEvent event
 // = keccak256(abi.encodePacked("UserOperationEvent(bytes32,address,address,uint256,bool,uint256,uint256)"))
 const userOperationEventId = utils.hexlify(
@@ -236,6 +238,15 @@ const notifyDiscord = async (text: string, webhookLink?: string) => {
   }
 };
 
+// Append a value to a JSON array in sharedState
+const pushToSharedState = async (
+  key: string,
+  value: UserOpProcessedEventParams
+) => {
+  sharedState[key] = sharedState[key] || [];
+  sharedState[key].push(JSON.parse(JSON.stringify(value)));
+};
+
 // Entrypoint for the Autotask
 export async function handler(actionEvent: ActionEvent) {
   if (
@@ -303,7 +314,12 @@ export async function handler(actionEvent: ActionEvent) {
       continue;
     }
 
+    if (userOpProcessedLog.chargeSuccessful) {
+      pushToSharedState("ChargeInPostOpSuccess", userOpProcessedLog);
+    }
+
     if (!userOpProcessedLog.chargeSuccessful) {
+      pushToSharedState("ChargeInPostOpFail", userOpProcessedLog);
       // Notify Discord with the post-operation revert
       await notifyDiscord(
         jsonStringify(userOpProcessedLog),
