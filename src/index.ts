@@ -202,13 +202,17 @@ const parseUserOpProcessedEvents = (params: {
 };
 
 // Sends notifications to Discord webhook
-const notifyDiscord = async (text: string, webhookLink?: string) => {
+const notifyDiscord = async (
+  text: string,
+  content: string,
+  webhookLink?: string
+) => {
   if (!webhookLink) {
     console.error(`Discord webhook link not found`);
     return;
   }
 
-  const discordText = `🐥 ${text}`;
+  const discordText = `🐥 ${text}:\n${content}`;
 
   const data = {
     content: `${discordText}`,
@@ -320,8 +324,13 @@ export async function handler(actionEvent: ActionEvent) {
 
     if (!userOpProcessedLog.chargeSuccessful) {
       pushToSharedState("ChargeInPostOpFail", userOpProcessedLog);
+
+      const transactionHash = requestBody.hash;
+      const sender = userOpProcessedLog.userOpSender;
+      const text = `Transaction ${transactionHash} failed to collect charges from sender ${sender} in the ChargeInPostOp mode of the OffChainPaymaster. Please check for any potential misconduct by the sender`;
       // Notify Discord with the post-operation revert
       await notifyDiscord(
+        text,
         jsonStringify(userOpProcessedLog),
         discordWebhookLink
       );
