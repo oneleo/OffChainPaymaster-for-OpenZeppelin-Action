@@ -1,4 +1,9 @@
-import { handler, sharedState, UserOpProcessedEventParams } from "../src/index";
+import {
+  handler,
+  sharedState,
+  UserOpProcessedEventParams,
+  PostOpRevertReasonEventParams,
+} from "../src/index";
 import { handleOpsActionEvent } from "./fixtures/handleOpsActionEvent";
 import { expect } from "chai";
 
@@ -14,14 +19,22 @@ describe("Handler and sharedState Tests", () => {
   it("should update sharedState with the correct key-value pair", async () => {
     await handler(handleOpsActionEvent);
 
-    const chargeInPostOpSuccess: UserOpProcessedEventParams[] =
-      sharedState["ChargeInPostOpSuccess"];
+    const chargeInPostOpSuccess: UserOpProcessedEventParams[] = sharedState[
+      "ChargeInPostOpSuccess"
+    ] as UserOpProcessedEventParams[];
     expect(chargeInPostOpSuccess[0].chargeSuccessful).to.eq(true);
 
-    const chargeInPostOpFail: UserOpProcessedEventParams[] =
-      sharedState["ChargeInPostOpFail"];
+    const chargeInPostOpFail: UserOpProcessedEventParams[] = sharedState[
+      "ChargeInPostOpFail"
+    ] as UserOpProcessedEventParams[];
 
     expect(chargeInPostOpFail[0].chargeSuccessful).to.eq(false);
+
+    const postOpRevertReason: PostOpRevertReasonEventParams[] = sharedState[
+      "PostOpRevertReason"
+    ] as PostOpRevertReasonEventParams[];
+
+    expect(postOpRevertReason[0].revertReason.error).to.eq("CanNotChargeFrom");
   });
 
   it("should not retain state between tests", () => {
