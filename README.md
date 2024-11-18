@@ -20,11 +20,13 @@
 
 4. Similarly, create a Slack webhook at [https://my.slack.com/services/new/incoming-webhook](https://my.slack.com/services/new/incoming-webhook) and store its URL in the `SLACK_PAYMASTER_CHANNEL_WEBHOOK` variable within OpenZeppelin Defender Secrets.
 
-5. Add "MONITORED_PAYMASTER_ADDRESSES" as a string array to filter paymaster addresses in EntryPoint’s UserOperationEvent, e.g., `["0x44D6f8362c144A1217f24A11bE35f2c418B6cb20","0xBDd6EB5C9A89f21B559f65C6b2bbeC265cE54C82","0x4779C973b060c9cc1592b404cAd9CB5AFB0d4B52"]`.
+5. Create a Alchemy API key at [https://dashboard.alchemy.com/apps](https://dashboard.alchemy.com/apps) and store its key in the `ALCHEMY_API_KEY` variable within OpenZeppelin Defender Secrets.
+
+6. Add "MONITORED_PAYMASTER_ADDRESSES" as a string array to filter paymaster addresses in EntryPoint’s UserOperationEvent, e.g., `["0xf67f1bB6817a138eD3C8f383a35B98D695f7E12c","0xbd7815594E6CeBdd2772A3676Ca29dB096f1Ec46","0x366359ADf61B97b011825bB7816F8c061027502f","0x1833bC4f1e2F33F3eE40e08fA55C26ce9C218Bcf","0xe3FA5B3378d30c9870Fda4249A0d6E4637d760B3"]`.
 
 ![Add paymaster addresses to secrets](images/addPaymasterAddressesToSecrets.png "Add paymaster addresses to secrets")
 
-6. Install OpenZeppelin Defender SDK Action Client CLI on local
+7. Install OpenZeppelin Defender SDK Action Client CLI on local
 
 ```bash
 $ npm install --global @openzeppelin/defender-sdk-action-client
