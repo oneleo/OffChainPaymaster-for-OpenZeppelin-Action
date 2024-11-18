@@ -571,7 +571,7 @@ export async function handler(actionEvent: ActionEvent) {
       alchemyApiKey
     );
     if (depositAmount === null) {
-      const text = `(Tenderly) Rpc error: unable to retrieve OffChainPaymaster's deposit on ${chainId}, triggered by UserOpProcessed in: https://v2.jiffyscan.xyz/userOpHash/${userOpProcessedLog.userOpHash} .`;
+      const text = `(OpenZeppelin) Rpc error: unable to retrieve OffChainPaymaster's deposit on ${chainId}, triggered by UserOpProcessed in: https://v2.jiffyscan.xyz/userOpHash/${userOpProcessedLog.userOpHash} .`;
 
       console.error(`text: ${text}`);
 
@@ -589,7 +589,7 @@ export async function handler(actionEvent: ActionEvent) {
     console.log(`alarmDepositAmount: ${alarmDepositAmount}`);
 
     if (depositAmount && depositAmount.toBigInt() <= alarmDepositAmount) {
-      const text = `(Tenderly) OffChainPaymaster's deposit (${depositAmount}) on ${chainId} (chainId) is fell below threshold (${alarmDepositAmount}), you can deposit here: ${paymasterOnScan} !`;
+      const text = `(OpenZeppelin) OffChainPaymaster's deposit (${depositAmount}) on ${chainId} (chainId) is fell below threshold (${alarmDepositAmount}), you can deposit here: ${paymasterOnScan} !`;
 
       console.warn(`text: ${text}`);
 
